@@ -1,7 +1,7 @@
 package com.remake.arsenal
 
 import com.remake.arsenal.entity.HelperEntity
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
