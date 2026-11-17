@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "remake_arsenal:hook_upgrade_template"
+  },
+  "base": {
+    "item": "remake_arsenal:grappling_hook_2"
+  },
+  "addition": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "remake_arsenal:grappling_hook_3",
+    "count": 1
+  }
+}

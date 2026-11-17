@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "remake_arsenal",
+	"version": "${version}",
+	"name": "[REMAKE] Arsenal",
+	"description": "Крюк с 5 улучшениями и уникальными зачарованиями, когти, ручной поршень, нотный шлем, ненавистный мешок и электро-крылья. Все с кастомными 3D-моделями.",
+	"authors": ["REMAKE"],
+	"license": "CC0-1.0",
+	"icon": "assets/remake_arsenal/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{ "value": "com.remake.arsenal.RemakeArsenal", "adapter": "kotlin" }
+		],
+		"client": [
+			{ "value": "com.remake.arsenal.client.RemakeArsenalClient", "adapter": "kotlin" }
+		]
+	},
+	"mixins": [
+		"remake_arsenal.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
