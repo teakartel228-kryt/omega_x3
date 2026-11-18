@@ -1,255 +1,118 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "0": "remake_arsenal:item/nether_brick_projectile",
+    "b": "remake_arsenal:item/nether_brick_projectile",
     "particle": "remake_arsenal:item/nether_brick_projectile"
   },
   "elements": [
     {
       "from": [
-        5,
-        4,
-        1
+        3.5,
+        6.25,
+        5.5
       ],
       "to": [
-        11,
-        8,
-        15
+        12.5,
+        9.75,
+        10.5
       ],
       "faces": {
         "north": {
-          "texture": "#0",
+          "texture": "#b",
           "uv": [
             0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            16,
-            16
+            5,
+            9,
+            8.5
           ]
         },
         "east": {
-          "texture": "#0",
+          "texture": "#b",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        5.5,
-        8,
-        2
-      ],
-      "to": [
-        10.5,
-        8.6,
-        14
-      ],
-      "faces": {
-        "up": {
-          "texture": "#0",
-          "uv": [
-            1,
-            1,
-            15,
-            15
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        4.5,
-        5,
-        3
-      ],
-      "to": [
-        5,
-        7,
-        6
-      ],
-      "faces": {
-        "north": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
+            9,
+            5,
+            14,
+            8.5
           ]
         },
         "south": {
-          "texture": "#0",
+          "texture": "#b",
           "uv": [
             0,
-            0,
-            4,
-            4
-          ]
-        },
-        "east": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
+            5,
+            9,
+            8.5
           ]
         },
         "west": {
-          "texture": "#0",
+          "texture": "#b",
           "uv": [
-            0,
-            0,
-            4,
-            4
+            9,
+            5,
+            14,
+            8.5
           ]
         },
         "up": {
-          "texture": "#0",
+          "texture": "#b",
           "uv": [
             0,
             0,
-            4,
-            4
+            9,
+            5
           ]
         },
         "down": {
-          "texture": "#0",
+          "texture": "#b",
           "uv": [
             0,
             0,
-            4,
-            4
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        11,
-        5,
-        9
-      ],
-      "to": [
-        11.5,
-        7,
-        12
-      ],
-      "faces": {
-        "north": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
-          ]
-        },
-        "south": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
-          ]
-        },
-        "east": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
-          ]
-        },
-        "west": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
-          ]
-        },
-        "up": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
-          ]
-        },
-        "down": {
-          "texture": "#0",
-          "uv": [
-            0,
-            0,
-            4,
-            4
+            9,
+            5
           ]
         }
       }
     }
   ],
   "display": {
-    "gui": {
+    "fixed": {
       "rotation": [
-        30,
-        45,
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
         0
       ],
       "scale": [
-        1.3,
-        1.3,
-        1.3
+        1,
+        1,
+        1
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        -1,
+        0
+      ],
+      "scale": [
+        1.5,
+        1.5,
+        1.5
       ]
     },
     "ground": {
       "rotation": [
-        25,
-        40,
+        0,
+        0,
         0
       ],
       "translation": [
@@ -261,18 +124,6 @@
         0.9,
         0.9,
         0.9
-      ]
-    },
-    "fixed": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "scale": [
-        1.2,
-        1.2,
-        1.2
       ]
     },
     "thirdperson_righthand": {

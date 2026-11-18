@@ -68,5 +68,11 @@
     "sounds": [
       "remake_arsenal:shard_land"
     ]
+  },
+  "spring_launch": {
+    "subtitle": "subtitles.remake_arsenal.spring_launch",
+    "sounds": [
+      "remake_arsenal:spring_launch"
+    ]
   }
 }
