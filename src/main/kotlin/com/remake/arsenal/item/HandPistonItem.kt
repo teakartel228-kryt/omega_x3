@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level
 /** Ручной поршень: зажми ПКМ чтобы зарядить, отпусти — выстрел. */
 class HandPistonItem(props: Properties) : Item(props) {
 	override fun getUseAnimation(stack: ItemStack): UseAnim = UseAnim.BOW
-	override fun getUseDuration(stack: ItemStack): Int = 72000
+	override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = 72000
 
 	override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(hand)
@@ -25,7 +25,7 @@ class HandPistonItem(props: Properties) : Item(props) {
 
 	override fun releaseUsing(stack: ItemStack, level: Level, entity: LivingEntity, timeCharged: Int) {
 		if (level.isClientSide || entity !is ServerPlayer) return
-		val used = getUseDuration(stack) - timeCharged
+		val used = getUseDuration(stack, entity) - timeCharged
 		PistonLogic.shoot(entity, stack, used >= PistonLogic.CHARGE_TICKS)
 	}
 }

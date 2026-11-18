@@ -7,7 +7,7 @@ import com.remake.arsenal.block.SmartRedstoneBE
 import com.remake.arsenal.block.SmartRedstoneBlock
 import com.remake.arsenal.block.StrikeBarrierBlock
 import com.remake.arsenal.block.StrikeTargetBlock
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder
+import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.BlockItem
