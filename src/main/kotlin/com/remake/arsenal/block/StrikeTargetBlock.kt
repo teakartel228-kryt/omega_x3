@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -74,7 +73,4 @@ class StrikeTargetBlock(props: Properties) : Block(props), HitReceiver {
 
 	override fun getSignal(state: BlockState, level: BlockGetter, pos: BlockPos, direction: Direction): Int = state.getValue(POWER)
 
-	/** Левая кнопка — это удар по мишени, а не ломание: сломать можно только с Shift (или в креативе с Shift). */
-	override fun getDestroyProgress(state: BlockState, player: Player, level: BlockGetter, pos: BlockPos): Float =
-		if (player.isShiftKeyDown) super.getDestroyProgress(state, player, level, pos) else 0.0f
 }

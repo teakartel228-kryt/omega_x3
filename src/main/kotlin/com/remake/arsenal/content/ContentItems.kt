@@ -14,5 +14,8 @@ object ContentItems {
 	@JvmField val BRICK_PROJECTILE: Item = reg("brick_projectile", Item(Item.Properties().stacksTo(16)))
 	@JvmField val NETHER_BRICK_PROJECTILE: Item = reg("nether_brick_projectile", Item(Item.Properties().stacksTo(16)))
 
+	/** «Голова» летящего крюка: только модель для сущности, в игре не выдаётся. */
+	@JvmField val HOOK_HEADS: List<Item> = (0..5).map { reg("hook_head_$it", Item(Item.Properties())) }
+
 	fun init() {}
 }

@@ -33,7 +33,8 @@ object ContentEvents {
 			player.resetAttackStrengthTicker()
 			player.swing(hand, true)
 			b.onHit(world as ServerLevel, pos, st, direction, Hit(player, dmg), 0)
-			InteractionResult.SUCCESS
+			// В выживании удар засчитывается и блок ломается как обычно (долгое удержание). В креативе ломается только с Shift.
+			if (player.isCreative) InteractionResult.SUCCESS else InteractionResult.PASS
 		})
 
 		// Метательные кирпичи: ПКМ кирпичом / незерским кирпичом в воздух.
@@ -62,6 +63,8 @@ object ContentEvents {
 			out.accept(ModBlocks.HIT_RELAY)
 			out.accept(ModBlocks.PROJECTILE_SPLITTER)
 			out.accept(ModBlocks.SMART_REDSTONE)
+			out.accept(ModBlocks.SPRING)
+			out.accept(ModBlocks.CONVEYOR)
 			out.accept(ContentItems.BRICK_SHARD)
 			out.accept(ContentItems.NETHER_BRICK_SHARD)
 		}

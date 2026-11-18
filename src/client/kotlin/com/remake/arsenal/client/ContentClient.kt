@@ -8,14 +8,14 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.entity.ThrownItemRenderer
 
 object ContentClient : ClientModInitializer {
 	override fun onInitializeClient() {
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.STRIKE_BARRIER, RenderType.translucent())
-		EntityRendererRegistry.register(ContentEntities.THROWN_BRICK) { ctx -> ThrownItemRenderer<ThrownBrick>(ctx) }
-		EntityRendererRegistry.register(ContentEntities.THROWN_NETHER_BRICK) { ctx -> ThrownItemRenderer<ThrownBrick>(ctx) }
-		EntityRendererRegistry.register(ContentEntities.BRICK_SHARD) { ctx -> ThrownItemRenderer<BrickShard>(ctx) }
-		EntityRendererRegistry.register(ContentEntities.NETHER_BRICK_SHARD) { ctx -> ThrownItemRenderer<BrickShard>(ctx) }
+		EntityRendererRegistry.register(ContentEntities.THROWN_BRICK) { ctx -> SpinningItemRenderer<ThrownBrick>(ctx, 0.55f, 26.0f) }
+		EntityRendererRegistry.register(ContentEntities.THROWN_NETHER_BRICK) { ctx -> SpinningItemRenderer<ThrownBrick>(ctx, 0.55f, 26.0f) }
+		EntityRendererRegistry.register(ContentEntities.BRICK_SHARD) { ctx -> SpinningItemRenderer<BrickShard>(ctx, 0.6f, 40.0f) }
+		EntityRendererRegistry.register(ContentEntities.NETHER_BRICK_SHARD) { ctx -> SpinningItemRenderer<BrickShard>(ctx, 0.6f, 40.0f) }
+		EntityRendererRegistry.register(ContentEntities.GRAPPLE_HOOK) { ctx -> GrappleHookRenderer(ctx) }
 	}
 }

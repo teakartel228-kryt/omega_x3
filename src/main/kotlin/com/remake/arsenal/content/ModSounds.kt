@@ -23,6 +23,7 @@ object ModSounds {
 	@JvmField val NETHER_BRICK_BREAK = reg("nether_brick_break")
 	@JvmField val SHARD_SCATTER = reg("shard_scatter")
 	@JvmField val SHARD_LAND = reg("shard_land")
+	@JvmField val SPRING_LAUNCH = reg("spring_launch")
 
 	fun init() {}
 }

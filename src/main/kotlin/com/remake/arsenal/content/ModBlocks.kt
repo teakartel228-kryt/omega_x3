@@ -3,7 +3,9 @@ package com.remake.arsenal.content
 import com.remake.arsenal.RemakeArsenal
 import com.remake.arsenal.block.HitRelayBlock
 import com.remake.arsenal.block.ProjectileSplitterBlock
+import com.remake.arsenal.block.ConveyorBlock
 import com.remake.arsenal.block.SmartRedstoneBE
+import com.remake.arsenal.block.SpringBlock
 import com.remake.arsenal.block.SmartRedstoneBlock
 import com.remake.arsenal.block.StrikeBarrierBlock
 import com.remake.arsenal.block.StrikeTargetBlock
@@ -28,6 +30,8 @@ object ModBlocks {
 	fun smartProps(): BlockBehaviour.Properties =
 		props().lightLevel { s -> if (s.getValue(SmartRedstoneBlock.ACTIVE)) 6 else 0 }
 
+	fun springProps(): BlockBehaviour.Properties = props().noOcclusion()
+
 	private fun <T : Block> reg(name: String, block: T): T {
 		Registry.register(BuiltInRegistries.BLOCK, RemakeArsenal.id(name), block)
 		Registry.register(BuiltInRegistries.ITEM, RemakeArsenal.id(name), BlockItem(block, Item.Properties()))
@@ -39,6 +43,9 @@ object ModBlocks {
 	@JvmField val HIT_RELAY: HitRelayBlock = reg("hit_relay", HitRelayBlock(props()))
 	@JvmField val PROJECTILE_SPLITTER: ProjectileSplitterBlock = reg("projectile_splitter", ProjectileSplitterBlock(props()))
 	@JvmField val SMART_REDSTONE: SmartRedstoneBlock = reg("smart_redstone", SmartRedstoneBlock(smartProps()))
+
+	@JvmField val SPRING: SpringBlock = reg("spring", SpringBlock(springProps()))
+	@JvmField val CONVEYOR: ConveyorBlock = reg("conveyor", ConveyorBlock(props()))
 
 	@JvmField val SMART_BE: BlockEntityType<SmartRedstoneBE> = Registry.register(
 		BuiltInRegistries.BLOCK_ENTITY_TYPE, RemakeArsenal.id("smart_redstone"),

@@ -61,5 +61,15 @@
   "subtitles.remake_arsenal.brick_break": "Кирпич разбивается",
   "subtitles.remake_arsenal.nether_brick_break": "Незерский кирпич разбивается",
   "subtitles.remake_arsenal.shard_scatter": "Осколки разлетаются",
-  "subtitles.remake_arsenal.shard_land": "Осколок падает"
+  "subtitles.remake_arsenal.shard_land": "Осколок падает",
+  "block.remake_arsenal.spring": "Пружина",
+  "block.remake_arsenal.conveyor": "Конвейер",
+  "entity.remake_arsenal.grapple_hook": "Крюк-кошка",
+  "subtitles.remake_arsenal.spring_launch": "Пружина подбрасывает",
+  "item.remake_arsenal.hook_head_0": "Голова крюка 0",
+  "item.remake_arsenal.hook_head_1": "Голова крюка 1",
+  "item.remake_arsenal.hook_head_2": "Голова крюка 2",
+  "item.remake_arsenal.hook_head_3": "Голова крюка 3",
+  "item.remake_arsenal.hook_head_4": "Голова крюка 4",
+  "item.remake_arsenal.hook_head_5": "Голова крюка 5"
 }

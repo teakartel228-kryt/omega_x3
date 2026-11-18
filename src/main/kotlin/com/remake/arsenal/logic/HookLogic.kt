@@ -1,6 +1,8 @@
 package com.remake.arsenal.logic
 
 import com.remake.arsenal.ModItems
+import com.remake.arsenal.content.ContentEntities
+import com.remake.arsenal.entity.GrappleHook
 import com.remake.arsenal.item.HookItem
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
@@ -12,6 +14,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.Container
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.FallingBlockEntity
@@ -28,6 +31,7 @@ import net.minecraft.world.level.block.FallingBlock
 import net.minecraft.world.level.block.ShulkerBoxBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.ChestType
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 
 object HookLogic {
@@ -84,17 +88,34 @@ object HookLogic {
 		player: ServerPlayer, level: ServerLevel, st: ArsenalState, stack: ItemStack,
 		tier: Int, dir: Vec3, cap: Int, shots: Int, quick: Int
 	) {
-		val range = if (tier >= 4) 28.0 else 18.0
-		val pick = Rays.pick(player, dir, range) { it is Projectile || it is LivingEntity }
-		Chain.draw(level, player.eyePosition.add(0.0, -0.35, 0.0), pick.to)
+		val hook = GrappleHook(ContentEntities.GRAPPLE_HOOK, level)
+		hook.owner = player
+		hook.hookTier = tier.coerceIn(0, 5)
+		hook.maxRange = if (tier >= 4) 28.0 else 18.0
+		hook.cap = cap
+		hook.shots = shots
+		hook.quick = quick
+		hook.hand = if (player.mainHandItem === stack) InteractionHand.MAIN_HAND else InteractionHand.OFF_HAND
+		hook.setPos(player.eyePosition.add(0.0, -0.35, 0.0).add(dir.scale(0.6)))
+		hook.launch(dir)
+		level.addFreshEntity(hook)
+	}
 
-		val entity = pick.entity
-		if (entity != null) {
-			hitEntity(player, level, st, stack, tier, entity, dir, shots, quick)
-			return
-		}
-		val block = pick.block ?: return
-		hitBlock(player, level, st, stack, tier, block.blockPos, block, cap)
+	private fun heldHook(player: ServerPlayer, hook: GrappleHook): ItemStack {
+		val s = player.getItemInHand(hook.hand)
+		return if (s.item is HookItem) s else ItemStack.EMPTY
+	}
+
+	/** Крюк долетел до сущности. */
+	fun onHookHitEntity(hook: GrappleHook, player: ServerPlayer, target: Entity) {
+		val level = player.serverLevel()
+		hitEntity(player, level, Arsenal.of(player), heldHook(player, hook), hook.hookTier, target, hook.shotDir, hook.shots, hook.quick)
+	}
+
+	/** Крюк долетел до блока. true = зацепился (игрока тянет к якорю). */
+	fun onHookHitBlock(hook: GrappleHook, player: ServerPlayer, hit: BlockHitResult): Boolean {
+		val level = player.serverLevel()
+		return hitBlock(player, level, Arsenal.of(player), heldHook(player, hook), hook.hookTier, hit.blockPos, hit, hook.cap, hook.id)
 	}
 
 	// ---------- попадание в сущность ----------
@@ -168,13 +189,13 @@ object HookLogic {
 	// ---------- попадание в блок ----------
 	private fun hitBlock(
 		player: ServerPlayer, level: ServerLevel, st: ArsenalState, stack: ItemStack,
-		tier: Int, pos: BlockPos, hit: net.minecraft.world.phys.BlockHitResult, cap: Int
-	) {
+		tier: Int, pos: BlockPos, hit: BlockHitResult, cap: Int, hookId: Int
+	): Boolean {
 		val state = level.getBlockState(pos)
 		val hardness = state.getDestroySpeed(level, pos)
 		if (hardness < 0.0f || hardness >= 50.0f) { // обсидиан и сверхпрочное: не зацепиться, не сломать
 			player.displayClientMessage(Component.translatable("msg.remake_arsenal.hook_too_hard"), true)
-			return
+			return false
 		}
 
 		// редстоун-крюк: нажимает кнопки/рычаги на расстоянии
@@ -183,7 +204,7 @@ object HookLogic {
 			state.useWithoutItem(level, player, hit)
 			setCharges(stack, ch - 1)
 			level.sendParticles(net.minecraft.core.particles.DustParticleOptions(org.joml.Vector3f(1f, 0.1f, 0.1f), 1f), pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, 8, 0.3, 0.3, 0.3, 0.0)
-			return
+			return false
 		}
 
 		// сыпучие блоки притягиваем
@@ -191,13 +212,13 @@ object HookLogic {
 			val fb = FallingBlockEntity.fall(level, pos, state)
 			fb.deltaMovement = player.position().subtract(Vec3.atCenterOf(pos)).scale(0.2).add(0.0, 0.2, 0.0)
 			fb.hurtMarked = true
-			return
+			return false
 		}
 
 		// сундуки, бочки, шалкеры
 		if (canPullContainer(state, level, pos, tier)) {
 			pullContainer(player, level, pos, state)
-			return
+			return false
 		}
 
 		// III: ломаем непрочное / трескаем кирпичи
@@ -208,14 +229,15 @@ object HookLogic {
 				level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.0f, 0.9f)
 			} else if (hardness <= 0.6f && !state.isAir) {
 				level.destroyBlock(pos, true, player)
-				return
+				return false
 			}
 		}
 
 		// просто цепляемся
-		st.anchors.add(Anchor(Vec3.atCenterOf(pos), level.gameTime + 100))
+		st.anchors.add(Anchor(Vec3.atCenterOf(pos), level.gameTime + 100, hookId))
 		while (st.anchors.size > cap) st.anchors.removeAt(0)
 		level.playSound(null, pos, SoundEvents.CHAIN_HIT, SoundSource.PLAYERS, 1.0f, 1.0f)
+		return true
 	}
 
 	private fun canPullContainer(state: BlockState, level: ServerLevel, pos: BlockPos, tier: Int): Boolean {
@@ -284,7 +306,6 @@ object HookLogic {
 				val d = a.pos.subtract(eye)
 				if (d.length() < 2.2) arrived = true
 				sum = sum.add(d.normalize())
-				Chain.draw(level, eye.add(0.0, -0.35, 0.0), a.pos)
 			}
 			if (arrived) {
 				player.deltaMovement = player.deltaMovement.add(0.0, 0.3, 0.0)

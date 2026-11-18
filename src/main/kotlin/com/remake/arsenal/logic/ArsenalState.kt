@@ -5,7 +5,7 @@ import net.minecraft.world.phys.Vec3
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
-class Anchor(val pos: Vec3, val expiresAt: Long)
+class Anchor(val pos: Vec3, val expiresAt: Long, val hookId: Int = -1)
 
 /** Серверное состояние способностей одного игрока (хранится в памяти). */
 class ArsenalState {

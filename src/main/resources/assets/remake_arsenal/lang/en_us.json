@@ -61,5 +61,15 @@
   "subtitles.remake_arsenal.brick_break": "Brick shatters",
   "subtitles.remake_arsenal.nether_brick_break": "Nether brick shatters",
   "subtitles.remake_arsenal.shard_scatter": "Shards scatter",
-  "subtitles.remake_arsenal.shard_land": "Shard lands"
+  "subtitles.remake_arsenal.shard_land": "Shard lands",
+  "block.remake_arsenal.spring": "Spring",
+  "block.remake_arsenal.conveyor": "Conveyor",
+  "entity.remake_arsenal.grapple_hook": "Grappling Hook",
+  "subtitles.remake_arsenal.spring_launch": "Spring boings",
+  "item.remake_arsenal.hook_head_0": "Hook Head 0",
+  "item.remake_arsenal.hook_head_1": "Hook Head 1",
+  "item.remake_arsenal.hook_head_2": "Hook Head 2",
+  "item.remake_arsenal.hook_head_3": "Hook Head 3",
+  "item.remake_arsenal.hook_head_4": "Hook Head 4",
+  "item.remake_arsenal.hook_head_5": "Hook Head 5"
 }

@@ -46,10 +46,12 @@ object PistonLogic {
 			pushBlocks(level, hit.blockPos.relative(pushDir.opposite), pushDir)
 		}
 
-		// 3) отдача в противоположную сторону
-		player.deltaMovement = player.deltaMovement.add(dir.scale(-0.9 * strength))
-		player.hurtMarked = true
-		player.fallDistance = 0.0f
+		// 3) отдача в противоположную сторону (при Shift игрока не откидывает)
+		if (!player.isShiftKeyDown) {
+			player.deltaMovement = player.deltaMovement.add(dir.scale(-0.9 * strength))
+			player.hurtMarked = true
+			player.fallDistance = 0.0f
+		}
 
 		level.playSound(null, player.blockPosition(), SoundEvents.PISTON_EXTEND, SoundSource.PLAYERS, 1.0f, if (charged) 0.7f else 1.1f)
 		level.sendParticles(ParticleTypes.POOF, end.x, end.y, end.z, 6, 0.2, 0.2, 0.2, 0.02)
