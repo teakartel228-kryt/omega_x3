@@ -87,7 +87,7 @@ class SmartRedstoneBlock(props: Properties) : Block(props), EntityBlock {
 		if (level.isClientSide) return InteractionResult.SUCCESS
 		val be = level.getBlockEntity(pos) as? SmartRedstoneBE ?: return InteractionResult.PASS
 		if (player.isShiftKeyDown) {
-			be.setEnabled(!be.enabled)
+			be.switchEnabled(!be.enabled)
 			player.displayClientMessage(if (be.enabled) Component.translatable("msg.remake_arsenal.smart_on", be.interval) else Component.translatable("msg.remake_arsenal.smart_off"), true)
 		} else if (be.error.isNotEmpty()) {
 			player.sendSystemMessage(Component.translatable("msg.remake_arsenal.smart_error", be.error))

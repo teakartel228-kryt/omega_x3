@@ -49,7 +49,7 @@ class SmartRedstoneBE(pos: BlockPos, state: BlockState) : BlockEntity(ModBlocks.
 		}
 	}
 
-	fun setEnabled(v: Boolean) { enabled = v; if (v) error = ""; syncState(); setChanged() }
+	fun switchEnabled(v: Boolean) { enabled = v; if (v) error = ""; syncState(); setChanged() }
 
 	fun cycleInterval() {
 		val i = SmartRedstoneBlock.INTERVALS.indexOf(interval)
