@@ -4,6 +4,8 @@
     "remake_arsenal:strike_barrier",
     "remake_arsenal:hit_relay",
     "remake_arsenal:projectile_splitter",
-    "remake_arsenal:smart_redstone"
+    "remake_arsenal:smart_redstone",
+    "remake_arsenal:spring",
+    "remake_arsenal:conveyor"
   ]
 }
