@@ -3,7 +3,9 @@
 	"package": "com.remake.arsenal.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"LivingEntityMixin"
+		"LivingEntityMixin",
+		"ProjectileMixin",
+		"ItemEntityAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

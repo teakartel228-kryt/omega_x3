@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IDI",
+    "DHD",
+    "IDI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "H": {
+      "item": "remake_arsenal:hit_relay"
+    }
+  },
+  "result": {
+    "id": "remake_arsenal:projectile_splitter",
+    "count": 1
+  }
+}

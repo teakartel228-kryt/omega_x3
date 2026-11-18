@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "remake_arsenal:nether_brick_shard"
+    },
+    {
+      "item": "remake_arsenal:nether_brick_shard"
+    },
+    {
+      "item": "remake_arsenal:nether_brick_shard"
+    },
+    {
+      "item": "remake_arsenal:nether_brick_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:nether_brick",
+    "count": 1
+  }
+}
