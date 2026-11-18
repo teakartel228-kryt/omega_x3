@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "remake_arsenal:block/hit_relay"
+    },
+    "facing=east": {
+      "model": "remake_arsenal:block/hit_relay",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "remake_arsenal:block/hit_relay",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "remake_arsenal:block/hit_relay",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "remake_arsenal:block/hit_relay",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "remake_arsenal:block/hit_relay",
+      "x": 90
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "target_hit": {
+    "subtitle": "subtitles.remake_arsenal.target_hit",
+    "sounds": [
+      "remake_arsenal:target_hit_1",
+      "remake_arsenal:target_hit_2"
+    ]
+  },
+  "barrier_pass": {
+    "subtitle": "subtitles.remake_arsenal.barrier_pass",
+    "sounds": [
+      "remake_arsenal:barrier_pass"
+    ]
+  },
+  "relay_pass": {
+    "subtitle": "subtitles.remake_arsenal.relay_pass",
+    "sounds": [
+      "remake_arsenal:relay_pass"
+    ]
+  },
+  "splitter_sort": {
+    "subtitle": "subtitles.remake_arsenal.splitter_sort",
+    "sounds": [
+      "remake_arsenal:splitter_sort"
+    ]
+  },
+  "smart_load": {
+    "subtitle": "subtitles.remake_arsenal.smart_load",
+    "sounds": [
+      "remake_arsenal:smart_load"
+    ]
+  },
+  "smart_error": {
+    "subtitle": "subtitles.remake_arsenal.smart_error",
+    "sounds": [
+      "remake_arsenal:smart_error"
+    ]
+  },
+  "brick_throw": {
+    "subtitle": "subtitles.remake_arsenal.brick_throw",
+    "sounds": [
+      "remake_arsenal:brick_throw"
+    ]
+  },
+  "brick_break": {
+    "subtitle": "subtitles.remake_arsenal.brick_break",
+    "sounds": [
+      "remake_arsenal:brick_break_1",
+      "remake_arsenal:brick_break_2"
+    ]
+  },
+  "nether_brick_break": {
+    "subtitle": "subtitles.remake_arsenal.nether_brick_break",
+    "sounds": [
+      "remake_arsenal:nether_brick_break_1",
+      "remake_arsenal:nether_brick_break_2"
+    ]
+  },
+  "shard_scatter": {
+    "subtitle": "subtitles.remake_arsenal.shard_scatter",
+    "sounds": [
+      "remake_arsenal:shard_scatter_1",
+      "remake_arsenal:shard_scatter_2"
+    ]
+  },
+  "shard_land": {
+    "subtitle": "subtitles.remake_arsenal.shard_land",
+    "sounds": [
+      "remake_arsenal:shard_land"
+    ]
+  }
+}

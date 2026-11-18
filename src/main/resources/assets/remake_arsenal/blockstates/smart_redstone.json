@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "remake_arsenal:block/smart_redstone_off"
+    },
+    "active=true": {
+      "model": "remake_arsenal:block/smart_redstone_on"
+    }
+  }
+}

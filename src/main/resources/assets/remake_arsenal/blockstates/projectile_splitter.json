@@ -1,0 +1,168 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "remake_arsenal:block/projectile_splitter"
+      }
+    },
+    {
+      "when": {
+        "combat": "north"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_combat"
+      }
+    },
+    {
+      "when": {
+        "combat": "east"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_combat",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "combat": "south"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_combat",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "combat": "west"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_combat",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "combat": "up"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_combat",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "combat": "down"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_combat",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "thrown": "north"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_thrown"
+      }
+    },
+    {
+      "when": {
+        "thrown": "east"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_thrown",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "thrown": "south"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_thrown",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "thrown": "west"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_thrown",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "thrown": "up"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_thrown",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "thrown": "down"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_thrown",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "special": "north"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_special"
+      }
+    },
+    {
+      "when": {
+        "special": "east"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_special",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "special": "south"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_special",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "special": "west"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_special",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "special": "up"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_special",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "special": "down"
+      },
+      "apply": {
+        "model": "remake_arsenal:block/splitter_port_special",
+        "x": 90
+      }
+    }
+  ]
+}
