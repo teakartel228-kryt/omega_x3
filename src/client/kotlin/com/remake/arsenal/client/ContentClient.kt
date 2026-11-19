@@ -7,6 +7,8 @@ import com.remake.arsenal.entity.ThrownBrick
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import com.remake.arsenal.entity.ThrownMessageBottle
 import net.minecraft.client.renderer.RenderType
 
 object ContentClient : ClientModInitializer {
@@ -16,6 +18,7 @@ object ContentClient : ClientModInitializer {
 		EntityRendererRegistry.register(ContentEntities.THROWN_NETHER_BRICK) { ctx -> SpinningItemRenderer<ThrownBrick>(ctx, 0.55f, 26.0f) }
 		EntityRendererRegistry.register(ContentEntities.BRICK_SHARD) { ctx -> SpinningItemRenderer<BrickShard>(ctx, 0.6f, 40.0f) }
 		EntityRendererRegistry.register(ContentEntities.NETHER_BRICK_SHARD) { ctx -> SpinningItemRenderer<BrickShard>(ctx, 0.6f, 40.0f) }
+		EntityRendererRegistry.register(ContentEntities.THROWN_MESSAGE_BOTTLE) { ctx -> ThrownItemRenderer<ThrownMessageBottle>(ctx) }
 		EntityRendererRegistry.register(ContentEntities.GRAPPLE_HOOK) { ctx -> GrappleHookRenderer(ctx) }
 	}
 }

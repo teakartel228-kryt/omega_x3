@@ -1,6 +1,7 @@
 package com.remake.arsenal.entity
 
 import com.remake.arsenal.logic.Arsenal
+import com.remake.arsenal.logic.HookHead
 import com.remake.arsenal.logic.HookLogic
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
@@ -11,7 +12,12 @@ import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.animal.IronGolem
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.entity.projectile.ProjectileUtil
 import net.minecraft.world.level.ClipContext
@@ -29,6 +35,8 @@ class GrappleHook(type: EntityType<out GrappleHook>, level: Level) : Projectile(
 	companion object {
 		@JvmField val DATA_STATE: EntityDataAccessor<Int> = SynchedEntityData.defineId(GrappleHook::class.java, EntityDataSerializers.INT)
 		@JvmField val DATA_TIER: EntityDataAccessor<Int> = SynchedEntityData.defineId(GrappleHook::class.java, EntityDataSerializers.INT)
+		@JvmField val DATA_HEAD: EntityDataAccessor<Int> = SynchedEntityData.defineId(GrappleHook::class.java, EntityDataSerializers.INT)
+		val MAGNETIC: TagKey<Block> = TagKey.create(Registries.BLOCK, com.remake.arsenal.RemakeArsenal.id("magnetic"))
 
 		const val FLYING = 0
 		const val STUCK = 1
@@ -59,9 +67,14 @@ class GrappleHook(type: EntityType<out GrappleHook>, level: Level) : Projectile(
 		get() = entityData.get(DATA_TIER)
 		set(v) { entityData.set(DATA_TIER, v) }
 
+	var head: HookHead
+		get() = HookHead.byIndex(entityData.get(DATA_HEAD))
+		set(v) { entityData.set(DATA_HEAD, v.ordinal) }
+
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(DATA_STATE, FLYING)
 		builder.define(DATA_TIER, 0)
+		builder.define(DATA_HEAD, 0)
 	}
 
 	/** Направить крюк вдоль вектора [dir] (поворот модели совпадает с полётом). */
@@ -114,7 +127,50 @@ class GrappleHook(type: EntityType<out GrappleHook>, level: Level) : Projectile(
 	private fun canTarget(e: Entity, player: ServerPlayer): Boolean =
 		e !== player && !e.isSpectator && e.isAlive && ((e is Projectile && e !is GrappleHook) || e is LivingEntity)
 
+	// ---------- магнетит: крюк тянется к железным и медным целям ----------
+	private fun isMagneticEntity(e: LivingEntity): Boolean {
+		if (e is IronGolem) return true
+		return e.armorSlots.any {
+			val path = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(it.item).path
+			path.startsWith("iron_") || path.startsWith("chainmail_") || path.startsWith("copper_")
+		}
+	}
+
+	private fun steer(level: ServerLevel, player: ServerPlayer) {
+		val v = deltaMovement
+		if (v.lengthSqr() < 1.0e-4) return
+		val fwd = v.normalize()
+		var best: Vec3? = null
+		var bestD = Double.MAX_VALUE
+		val here = position()
+		for (e in level.getEntitiesOfClass(LivingEntity::class.java, AABB(here, here).inflate(7.0))) {
+			if (e === player || !e.isAlive || e.isSpectator || !isMagneticEntity(e)) continue
+			val c = e.boundingBox.center
+			val d = c.subtract(here)
+			val dist = d.length()
+			if (dist < 0.5 || d.normalize().dot(fwd) < 0.15) continue
+			if (dist < bestD) { bestD = dist; best = c }
+		}
+		val bp = BlockPos.containing(here)
+		val m = BlockPos.MutableBlockPos()
+		for (dx in -5..5) for (dy in -5..5) for (dz in -5..5) {
+			m.set(bp.x + dx, bp.y + dy, bp.z + dz)
+			if (!level.getBlockState(m).`is`(MAGNETIC)) continue
+			val c = Vec3.atCenterOf(m)
+			val d = c.subtract(here)
+			val dist = d.length()
+			if (dist < 0.8 || d.normalize().dot(fwd) < 0.15) continue
+			if (dist < bestD) { bestD = dist; best = c }
+		}
+		val t = best ?: return
+		val want = t.subtract(here).normalize()
+		val nd = fwd.scale(0.62).add(want.scale(0.38)).normalize()
+		deltaMovement = nd.scale(v.length())
+		shotDir = nd
+	}
+
 	private fun flyStep(level: ServerLevel, player: ServerPlayer) {
+		if (head == HookHead.MAGNET && tickCount % 2 == 0) steer(level, player)
 		val from = position()
 		val v = deltaMovement
 		val to = from.add(v)

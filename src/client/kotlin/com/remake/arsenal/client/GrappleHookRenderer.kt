@@ -6,6 +6,7 @@ import com.mojang.math.Axis
 import com.remake.arsenal.RemakeArsenal
 import com.remake.arsenal.content.ContentItems
 import com.remake.arsenal.entity.GrappleHook
+import com.remake.arsenal.logic.HookHead
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.culling.Frustum
@@ -30,6 +31,13 @@ class GrappleHookRenderer(ctx: EntityRendererProvider.Context) : EntityRenderer<
 
 	private val itemRenderer = ctx.itemRenderer
 	private val heads: List<ItemStack> by lazy { ContentItems.HOOK_HEADS.map { ItemStack(it) } }
+	private val special: Map<HookHead, ItemStack> by lazy {
+		mapOf(
+			HookHead.MACE to ItemStack(ContentItems.MACE_HEAD),
+			HookHead.TRIDENT to ItemStack(ContentItems.TRIDENT_HEAD),
+			HookHead.MAGNET to ItemStack(ContentItems.MAGNETITE_HEAD)
+		)
+	}
 
 	override fun getTextureLocation(entity: GrappleHook): ResourceLocation = CHAIN
 
@@ -42,7 +50,7 @@ class GrappleHookRenderer(ctx: EntityRendererProvider.Context) : EntityRenderer<
 		pose.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partial, e.yRotO, e.yRot) + 180.0f))
 		pose.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partial, e.xRotO, e.xRot)))
 		pose.scale(0.62f, 0.62f, 0.62f)
-		val head = heads[e.hookTier.coerceIn(0, heads.size - 1)]
+		val head = special[e.head] ?: heads[e.hookTier.coerceIn(0, heads.size - 1)]
 		itemRenderer.renderStatic(head, ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, pose, buf, e.level(), e.id)
 		pose.popPose()
 

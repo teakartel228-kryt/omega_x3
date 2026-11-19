@@ -71,14 +71,17 @@ object HookLogic {
 		val multishot = Ench.level(level, stack, Ench.MULTISHOT).coerceAtMost(1)
 		val power = Ench.level(level, stack, Ench.POWER).coerceIn(0, 5)
 		val quick = Ench.level(level, stack, Ench.QUICK_RECHARGE).coerceIn(0, 3)
-		val shots = 1 + multishot
-		val cap = (if (tier >= 4) 2 else 1) + multishot
+		val head = HookHeads.of(stack)
+		val extra = if (head == HookHead.TRIDENT) 2 else 0 // трезубец: +2 крюка (1→3, 2→4, 3→5)
+		val shots = 1 + multishot + extra
+		val cap = (if (tier >= 4) 2 else 1) + multishot + extra
 		st.hookPower = power
 
+		val spacing = if (shots == 2) 14.0 else 8.0
 		for (i in 0 until shots) {
-			val yawOffset = if (shots == 1) 0f else if (i == 0) -7f else 7f
+			val yawOffset = ((i - (shots - 1) / 2.0) * spacing).toFloat()
 			val dir = Vec3.directionFromRotation(player.xRot, player.yRot + yawOffset)
-			shootOne(player, level, st, stack, tier, dir, cap, shots, quick)
+			shootOne(player, level, st, stack, tier, dir, cap, shots, quick, head)
 		}
 		level.playSound(null, player.blockPosition(), SoundEvents.CHAIN_PLACE, SoundSource.PLAYERS, 1.0f, 1.2f)
 		player.cooldowns.addCooldown(stack.item, 8)
@@ -86,11 +89,12 @@ object HookLogic {
 
 	private fun shootOne(
 		player: ServerPlayer, level: ServerLevel, st: ArsenalState, stack: ItemStack,
-		tier: Int, dir: Vec3, cap: Int, shots: Int, quick: Int
+		tier: Int, dir: Vec3, cap: Int, shots: Int, quick: Int, head: HookHead
 	) {
 		val hook = GrappleHook(ContentEntities.GRAPPLE_HOOK, level)
 		hook.owner = player
 		hook.hookTier = tier.coerceIn(0, 5)
+		hook.head = head
 		hook.maxRange = if (tier >= 4) 28.0 else 18.0
 		hook.cap = cap
 		hook.shots = shots
@@ -109,7 +113,7 @@ object HookLogic {
 	/** Крюк долетел до сущности. */
 	fun onHookHitEntity(hook: GrappleHook, player: ServerPlayer, target: Entity) {
 		val level = player.serverLevel()
-		hitEntity(player, level, Arsenal.of(player), heldHook(player, hook), hook.hookTier, target, hook.shotDir, hook.shots, hook.quick)
+		hitEntity(player, level, Arsenal.of(player), heldHook(player, hook), hook.hookTier, target, hook.shotDir, hook.shots, hook.quick, hook.head)
 	}
 
 	/** Крюк долетел до блока. true = зацепился (игрока тянет к якорю). */
@@ -121,7 +125,7 @@ object HookLogic {
 	// ---------- попадание в сущность ----------
 	private fun hitEntity(
 		player: ServerPlayer, level: ServerLevel, st: ArsenalState, stack: ItemStack,
-		tier: Int, target: Entity, dir: Vec3, shots: Int, quick: Int
+		tier: Int, target: Entity, dir: Vec3, shots: Int, quick: Int, head: HookHead = HookHead.NONE
 	) {
 		// ловим снаряд и отправляем обратно
 		if (target is Projectile) {
@@ -136,6 +140,16 @@ object HookLogic {
 
 		if (level.gameTime < st.emergencyUntil) {
 			player.displayClientMessage(Component.translatable("msg.remake_arsenal.hook_locked"), true)
+			return
+		}
+		// булава: сильный удар, но цепь всегда рвётся — экстренный режим гарантирован
+		if (head == HookHead.MACE) {
+			target.hurt(player.damageSources().playerAttack(player), 10.0f + 2.0f * st.hookPower)
+			val away = target.position().subtract(player.position()).normalize()
+			target.deltaMovement = away.scale(0.8).add(0.0, 0.3, 0.0)
+			target.hurtMarked = true
+			level.playSound(null, target.blockPosition(), SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 1.0f, 1.1f)
+			emergency(player, level, st, stack, dir)
 			return
 		}
 		val heavy = isHeavy(target)

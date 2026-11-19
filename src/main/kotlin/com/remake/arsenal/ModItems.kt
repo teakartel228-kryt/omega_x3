@@ -4,6 +4,7 @@ import com.remake.arsenal.item.ClimbingClawsItem
 import com.remake.arsenal.item.HandPistonItem
 import com.remake.arsenal.item.HateBagItem
 import com.remake.arsenal.item.HookItem
+import com.remake.arsenal.item.MessageBottleItem
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -58,6 +59,9 @@ object ModItems {
 	}
 
 	@JvmField
+	val MESSAGE_BOTTLE: Item = reg("message_bottle", MessageBottleItem(Item.Properties().stacksTo(16)))
+
+	@JvmField
 	val HOOK_UPGRADE_TEMPLATE: Item = reg("hook_upgrade_template", Item(Item.Properties()))
 
 	fun hookName(tier: Int) = if (tier == 0) "grappling_hook" else "grappling_hook_$tier"
@@ -75,6 +79,7 @@ object ModItems {
 				out.accept(NOTE_HELMET)
 				out.accept(HATE_BAG)
 				out.accept(ELECTRO_WINGS)
+				out.accept(MESSAGE_BOTTLE)
 			}
 			.build()
 	)

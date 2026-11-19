@@ -25,7 +25,9 @@ object PistonLogic {
 		val level = player.serverLevel()
 		val dir = player.lookAngle
 		val reach = if (charged) 6.0 else 3.0        // заряженный поршень в 2 раза длиннее
-		val strength = if (charged) 2.0 else 1.0     // и толкает в 2 раза сильнее
+		val over = Ench.level(level, stack, Ench.PISTON_OVERDRIVE)
+		val shock = Ench.level(level, stack, Ench.PISTON_SHOCKWAVE)
+		val strength = (if (charged) 2.0 else 1.0) * (1.0 + 0.25 * over) // заряженный толкает в 2 раза сильнее; «Форсаж» усиливает
 		val eye = player.eyePosition
 		val end = eye.add(dir.scale(reach))
 
@@ -33,8 +35,20 @@ object PistonLogic {
 		val targets = level.getEntities(player, AABB(eye, end).inflate(1.0), Predicate<net.minecraft.world.entity.Entity> { it is LivingEntity && it.isAlive && it !== player })
 		for (e in targets) {
 			if (e.boundingBox.inflate(0.4).clip(eye, end).isPresent) {
-				e.hurt(player.damageSources().playerAttack(player), if (charged) 6.0f else 3.0f)
+				e.hurt(player.damageSources().playerAttack(player), (if (charged) 6.0f else 3.0f) + over)
 				e.deltaMovement = e.deltaMovement.add(dir.x * strength, dir.y * strength * 0.8 + 0.2, dir.z * strength)
+				e.hurtMarked = true
+			}
+		}
+
+		// «Ударная волна»: вокруг точки удара отбрасывает всех рядом
+		if (shock > 0) {
+			val c = end
+			for (e in level.getEntitiesOfClass(LivingEntity::class.java, AABB(c, c).inflate(2.0 + 1.5 * shock))) {
+				if (e === player || !e.isAlive) continue
+				val away = e.position().subtract(c).multiply(1.0, 0.0, 1.0)
+				val n = if (away.lengthSqr() < 1.0e-4) dir else away.normalize()
+				e.deltaMovement = e.deltaMovement.add(n.x * 0.9 * shock, 0.35, n.z * 0.9 * shock)
 				e.hurtMarked = true
 			}
 		}

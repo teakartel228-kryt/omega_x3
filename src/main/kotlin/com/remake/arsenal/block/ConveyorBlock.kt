@@ -46,7 +46,7 @@ class ConveyorBlock(props: Properties) : Block(props) {
 	override fun neighborChanged(state: BlockState, level: Level, pos: BlockPos, block: Block, fromPos: BlockPos, moving: Boolean) {
 		if (level.isClientSide) return
 		val powered = level.hasNeighborSignal(pos)
-		if (powered != state.getValue(POWERED)) level.setBlock(pos, state.setValue(POWERED, powered), UPDATE_CLIENTS)
+		if (powered != state.getValue(POWERED)) level.setBlock(pos, state.setValue(POWERED, powered), Block.UPDATE_CLIENTS)
 	}
 
 	override fun rotate(state: BlockState, rotation: Rotation): BlockState =

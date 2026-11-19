@@ -3,6 +3,7 @@ package com.remake.arsenal.content
 import com.remake.arsenal.RemakeArsenal
 import com.remake.arsenal.entity.BrickShard
 import com.remake.arsenal.entity.GrappleHook
+import com.remake.arsenal.entity.ThrownMessageBottle
 import com.remake.arsenal.entity.ThrownBrick
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
@@ -22,6 +23,7 @@ object ContentEntities {
 	@JvmField val BRICK_SHARD: EntityType<BrickShard> = reg("brick_shard", EntityType.EntityFactory<BrickShard> { t, l -> BrickShard(t, l) }, 0.2f)
 	@JvmField val NETHER_BRICK_SHARD: EntityType<BrickShard> = reg("nether_brick_shard", EntityType.EntityFactory<BrickShard> { t, l -> BrickShard(t, l) }, 0.2f)
 
+	@JvmField val THROWN_MESSAGE_BOTTLE: EntityType<ThrownMessageBottle> = reg("thrown_message_bottle", EntityType.EntityFactory<ThrownMessageBottle> { t, l -> ThrownMessageBottle(t, l) }, 0.25f)
 	@JvmField val GRAPPLE_HOOK: EntityType<GrappleHook> = Registry.register(
 		BuiltInRegistries.ENTITY_TYPE, RemakeArsenal.id("grapple_hook"),
 		EntityType.Builder.of(EntityType.EntityFactory<GrappleHook> { t, l -> GrappleHook(t, l) }, MobCategory.MISC)

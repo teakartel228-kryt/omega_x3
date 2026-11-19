@@ -40,12 +40,12 @@ class SpringBlock(props: Properties) : Block(props) {
 		private const val LAUNCH_DOWN = -1.0
 
 		private fun shapeOf(dir: Direction, h: Double): VoxelShape = when (dir) {
-			Direction.UP -> box(0.0, 0.0, 0.0, 16.0, h, 16.0)
-			Direction.DOWN -> box(0.0, 16.0 - h, 0.0, 16.0, 16.0, 16.0)
-			Direction.NORTH -> box(0.0, 0.0, 16.0 - h, 16.0, 16.0, 16.0)
-			Direction.SOUTH -> box(0.0, 0.0, 0.0, 16.0, 16.0, h)
-			Direction.EAST -> box(0.0, 0.0, 0.0, h, 16.0, 16.0)
-			Direction.WEST -> box(16.0 - h, 0.0, 0.0, 16.0, 16.0, 16.0)
+			Direction.UP -> Block.box(0.0, 0.0, 0.0, 16.0, h, 16.0)
+			Direction.DOWN -> Block.box(0.0, 16.0 - h, 0.0, 16.0, 16.0, 16.0)
+			Direction.NORTH -> Block.box(0.0, 0.0, 16.0 - h, 16.0, 16.0, 16.0)
+			Direction.SOUTH -> Block.box(0.0, 0.0, 0.0, 16.0, 16.0, h)
+			Direction.EAST -> Block.box(0.0, 0.0, 0.0, h, 16.0, 16.0)
+			Direction.WEST -> Block.box(16.0 - h, 0.0, 0.0, 16.0, 16.0, 16.0)
 		}
 
 		private val EXTENDED: Map<Direction, VoxelShape> = Direction.values().associateWith { shapeOf(it, 14.0) }
@@ -110,7 +110,7 @@ class SpringBlock(props: Properties) : Block(props) {
 		if (level.isClientSide) return
 
 		entity.hurtMarked = true
-		level.setBlock(pos, state.setValue(COMPRESSED, true), UPDATE_ALL)
+		level.setBlock(pos, state.setValue(COMPRESSED, true), Block.UPDATE_ALL)
 		level.scheduleTick(pos, this, 8)
 		level.playSound(null, pos, ModSounds.SPRING_LAUNCH, SoundSource.BLOCKS, 1.0f, 0.9f + level.random.nextFloat() * 0.2f)
 		val sl = level as ServerLevel
@@ -122,6 +122,6 @@ class SpringBlock(props: Properties) : Block(props) {
 	}
 
 	override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-		if (state.getValue(COMPRESSED)) level.setBlock(pos, state.setValue(COMPRESSED, false), UPDATE_ALL)
+		if (state.getValue(COMPRESSED)) level.setBlock(pos, state.setValue(COMPRESSED, false), Block.UPDATE_ALL)
 	}
 }

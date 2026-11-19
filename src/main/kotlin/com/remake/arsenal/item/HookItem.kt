@@ -1,6 +1,11 @@
 package com.remake.arsenal.item
 
 import com.remake.arsenal.logic.Ench
+import com.remake.arsenal.logic.HookHead
+import com.remake.arsenal.logic.HookHeads
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.ChatFormatting
 import com.remake.arsenal.logic.HookLogic
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -22,6 +27,13 @@ class HookItem(val tier: Int, props: Properties) : Item(props) {
 		if (level.isClientSide) return InteractionResultHolder.sidedSuccess(stack, true)
 		HookLogic.fire(player as ServerPlayer, stack, tier)
 		return InteractionResultHolder.sidedSuccess(stack, false)
+	}
+
+	override fun appendHoverText(stack: ItemStack, context: TooltipContext, tooltip: MutableList<Component>, flag: TooltipFlag) {
+		val head = HookHeads.of(stack)
+		if (head != HookHead.NONE) {
+			tooltip.add(Component.translatable("hook.head.label", Component.translatable("hook.head.${head.key}")).withStyle(ChatFormatting.GRAY))
+		}
 	}
 
 	/** Редстоун-крюк заряжается от блока редстоуна. */

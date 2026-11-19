@@ -1,6 +1,9 @@
 package com.remake.arsenal.item
 
 import com.remake.arsenal.logic.ClawsHelper
+import com.remake.arsenal.logic.Ench
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
@@ -23,6 +26,13 @@ class ClimbingClawsItem(props: Properties) : Item(props) {
 			} finally {
 				ClawsHelper.busy = false
 			}
+		}
+		if (!attacker.level().isClientSide) {
+			val lvl = attacker.level()
+			val bleed = Ench.level(lvl, stack, Ench.CLAWS_BLEED)
+			if (bleed > 0) target.addEffect(MobEffectInstance(MobEffects.WITHER, 40 + 30 * bleed, 0))
+			val vamp = Ench.level(lvl, stack, Ench.CLAWS_VAMPIRE)
+			if (vamp > 0) attacker.heal(1.0f * vamp)
 		}
 		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND)
 		return true

@@ -17,6 +17,15 @@ object Ench {
 	val ARMS = key("hook_arms")
 	val REDSTONE = key("redstone_hook")
 	val DEFENSE = key("defense_mechanism")
+	val CLAWS_BLEED = key("claws_bleed")
+	val CLAWS_VAMPIRE = key("claws_vampire")
+	val PISTON_OVERDRIVE = key("piston_overdrive")
+	val PISTON_SHOCKWAVE = key("piston_shockwave")
+	val BRICK_FIRE = key("brick_fire")
+	val BRICK_EXPLOSIVE = key("brick_explosive")
+	val BRICK_FROST = key("brick_frost")
+	val BRICK_VENOM = key("brick_venom")
+	val BRICK_STORM = key("brick_storm")
 
 	fun level(level: Level, stack: ItemStack, key: ResourceKey<Enchantment>): Int {
 		if (stack.isEmpty) return 0
