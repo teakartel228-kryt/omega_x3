@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "minecraft:tnt"
+  },
+  "result": {
+    "id": "minecraft:barrier"
+  },
+  "experience": 0.0,
+  "cookingtime": 100
+}

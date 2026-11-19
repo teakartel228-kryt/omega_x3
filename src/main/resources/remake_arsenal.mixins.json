@@ -5,7 +5,8 @@
 	"mixins": [
 		"LivingEntityMixin",
 		"ProjectileMixin",
-		"ItemEntityAccessor"
+		"ItemEntityAccessor",
+		"FurnaceTntMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
