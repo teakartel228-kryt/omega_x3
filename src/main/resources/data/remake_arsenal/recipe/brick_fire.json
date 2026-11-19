@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:brick"
+    },
+    {
+      "item": "minecraft:brick"
+    },
+    {
+      "item": "minecraft:fire_charge"
+    },
+    {
+      "item": "minecraft:fire_charge"
+    }
+  ],
+  "result": {
+    "id": "minecraft:brick",
+    "count": 2,
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "remake_arsenal:brick_fire": 1
+        }
+      }
+    }
+  }
+}
